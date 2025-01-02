@@ -2,6 +2,8 @@
 
 C strings whose memory is managed by the Go runtime.
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/bminer/go-cstring.svg)](https://pkg.go.dev/github.com/bminer/go-cstring)
+
 There are two primary advantages to this library over using C.CString:
 
 1. An extra byte is allocated for the null-terminator byte, so converting a
