@@ -9,8 +9,6 @@ import "C"
 import (
 	"errors"
 	"unsafe"
-
-	"golang.org/x/exp/constraints"
 )
 
 // ByteConstraint is a type constraint that restricts the type to an 8-bit
@@ -25,7 +23,7 @@ type CString[T ByteConstraint] []T
 // Make creates a new CString with the given length in bytes. The provided
 // length includes the null terminator. For example, the string "hello\0" has
 // length 6. Panics if the length is less than 1.
-func Make[T ByteConstraint, I constraints.Integer](n I) CString[T] {
+func Make[T ByteConstraint](n int) CString[T] {
 	if n < 1 {
 		panic("length must be at least 1")
 	}
