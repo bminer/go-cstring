@@ -1,6 +1,7 @@
 package cstring
 
 import (
+	"bytes"
 	"testing"
 	"unsafe"
 )
@@ -41,6 +42,16 @@ func TestNewCString(t *testing.T) {
 }
 
 func TestNewCStringWithNullCharacter(t *testing.T) {
+	cStr, err := NewWithCheck[byte]("hello\x00world")
+	if err == nil {
+		t.Errorf("expected error for string with null character")
+	}
+	if cStr != nil {
+		t.Errorf("expected nil CString")
+	}
+}
+
+func TestNewCStringWithNullCharacterPanic(t *testing.T) {
 	defer func() {
 		if r := recover(); r == nil {
 			t.Errorf("expected panic for string with null character")
@@ -58,5 +69,13 @@ func TestCStringEqualityLength(t *testing.T) {
 	}
 	if exp, got := len(goStr), strlen(ptr); exp != got {
 		t.Errorf("expected length %d, got %d", exp, got)
+	}
+}
+
+func TestCStringBytes(t *testing.T) {
+	goStr := "hello\n\tworld 😊!"
+	cStr := New[byte](goStr)
+	if !bytes.Equal(cStr.Bytes(), []byte(goStr)) {
+		t.Errorf("expected bytes to be equal to %s", goStr)
 	}
 }
