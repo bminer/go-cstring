@@ -58,6 +58,9 @@ func NewWithCheck[T ByteConstraint](s string) (CString[T], error) {
 // String returns the Go string representation of the CString by calling
 // C.GoString.
 func (s CString[T]) String() string {
+	if len(s) < 1 {
+		return ""
+	}
 	return C.GoString((*C.char)(unsafe.Pointer(&s[0])))
 }
 
@@ -75,6 +78,9 @@ func (s CString[T]) Bytes() []byte {
 // function does not perform any conversions because the string is already
 // stored internally as a null-terminated C string, so it is very fast.
 func (s CString[T]) Pointer() *T {
+	if len(s) < 1 {
+		return nil
+	}
 	return &s[0]
 }
 
