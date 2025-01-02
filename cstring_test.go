@@ -2,6 +2,7 @@ package cstring
 
 import (
 	"bytes"
+	"fmt"
 	"testing"
 	"unsafe"
 )
@@ -78,4 +79,13 @@ func TestCStringBytes(t *testing.T) {
 	if !bytes.Equal(cStr.Bytes(), []byte(goStr)) {
 		t.Errorf("expected bytes to be equal to %s", goStr)
 	}
+}
+
+func ExampleCString() {
+	cStr := New[byte]("hello\n\tworld 😊!")
+	ptr := unsafe.Pointer(cStr.Pointer())
+	if cStringEquals(ptr, "hello\n\tworld 😊!") {
+		fmt.Println("strings are equal")
+	}
+	// Output: strings are equal
 }
