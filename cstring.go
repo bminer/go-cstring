@@ -76,7 +76,9 @@ func (s CString[T]) Bytes() []byte {
 
 // Pointer returns the pointer to the first element of the CString. This
 // function does not perform any conversions because the string is already
-// stored internally as a null-terminated C string, so it is very fast.
+// stored internally as a null-terminated C string, so it is very fast. To avoid
+// being flogged by an angry mob, please follow the rules for passing Go
+// pointers to C: https://pkg.go.dev/cmd/cgo#hdr-Passing_pointers
 func (s CString[T]) Pointer() *T {
 	if len(s) < 1 {
 		return nil
