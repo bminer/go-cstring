@@ -18,6 +18,9 @@ type ByteConstraint interface{ ~int8 | ~uint8 }
 // CString is a buffer that can be converted to a Go string or used in C
 // functions that require a pointer to a C string. Go will handle the memory
 // allocation and freeing.
+//
+// The zero value is a special case because the Pointer method returns `nil`.
+// To create an empty string that has a valid C pointer, use Make(1) or New("").
 type CString[T ByteConstraint] []T
 
 // Make creates a new CString with the given length in bytes. The provided
